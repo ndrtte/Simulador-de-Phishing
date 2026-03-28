@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { Shield, Mail, CheckCircle, Plus, ArrowRight } from "lucide-react";
+import {
+  Shield,
+  Mail,
+  CheckCircle,
+  Plus,
+  ArrowRight,
+  BookOpenIcon,
+} from "lucide-react";
 import { Button } from "./ui/button";
 
 export function Welcome() {
@@ -17,10 +24,16 @@ export function Welcome() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: "#F5F7FA" }}>
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ backgroundColor: "#F5F7FA" }}
+    >
       <div className="max-w-2xl w-full text-center">
         {/* Icon */}
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 shadow-lg" style={{ backgroundColor: "#3B82F6" }}>
+        <div
+          className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 shadow-lg"
+          style={{ backgroundColor: "#3B82F6" }}
+        >
           <Shield className="w-10 h-10 text-white" />
         </div>
 
@@ -31,7 +44,8 @@ export function Welcome() {
 
         {/* Description */}
         <p className="text-xl text-gray-600 mb-12 max-w-xl mx-auto leading-relaxed">
-          Pon a prueba tu capacidad para identificar correos electrónicos de phishing en un entorno seguro.
+          Pon a prueba tu capacidad para identificar correos electrónicos de
+          phishing en un entorno seguro.
         </p>
 
         {/* Configuration Section */}
@@ -54,11 +68,20 @@ export function Welcome() {
                       : "border-gray-300 bg-white hover:border-gray-400"
                     }`}
                 >
-                  <div className="text-3xl font-bold mb-2" style={{ color: emailCount === count ? "#3B82F6" : "#6B7280" }}>
+                  <div
+                    className="text-3xl font-bold mb-2"
+                    style={{
+                      color: emailCount === count ? "#3B82F6" : "#6B7280",
+                    }}
+                  >
                     {count}
                   </div>
                   <div className="text-sm text-gray-600">
-                    {count === 5 ? "Rápido" : count === 10 ? "Estándar" : "Largo"}
+                    {count === 5
+                      ? "Rápido"
+                      : count === 10
+                        ? "Estándar"
+                        : "Largo"}
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
                     ~{count === 5 ? "3" : count === 10 ? "5" : "8"} min
@@ -73,22 +96,37 @@ export function Welcome() {
         {!showConfig && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <Mail className="w-8 h-8 mb-3 mx-auto" style={{ color: "#3B82F6" }} />
-              <h3 className="font-semibold text-gray-900 mb-2">“Escenarios realistas</h3>
+              <Mail
+                className="w-8 h-8 mb-3 mx-auto"
+                style={{ color: "#3B82F6" }}
+              />
+              <h3 className="font-semibold text-gray-900 mb-2">
+                “Escenarios realistas
+              </h3>
               <p className="text-sm text-gray-600">
                 Practica con ejemplos reales de phishing.
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <CheckCircle className="w-8 h-8 mb-3 mx-auto" style={{ color: "#22C55E" }} />
-              <h3 className="font-semibold text-gray-900 mb-2">Retroalimentación inmediata</h3>
+              <CheckCircle
+                className="w-8 h-8 mb-3 mx-auto"
+                style={{ color: "#22C55E" }}
+              />
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Retroalimentación inmediata
+              </h3>
               <p className="text-sm text-gray-600">
                 Aprende de tus decisiones inmediatamente.
               </p>
             </div>
             <div className="bg-white rounded-xl p-6 shadow-sm">
-              <Shield className="w-8 h-8 mb-3 mx-auto" style={{ color: "#3B82F6" }} />
-              <h3 className="font-semibold text-gray-900 mb-2">Entrenamiento seguro</h3>
+              <Shield
+                className="w-8 h-8 mb-3 mx-auto"
+                style={{ color: "#3B82F6" }}
+              />
+              <h3 className="font-semibold text-gray-900 mb-2">
+                Entrenamiento seguro
+              </h3>
               <p className="text-sm text-gray-600">
                 No hay datos ni cuentas reales en riesgo.
               </p>
@@ -122,6 +160,15 @@ export function Welcome() {
             >
               <Plus className="w-5 h-5" />
               Crear Email
+            </Button>
+          )}
+
+          {!showConfig && (
+            <Button
+              onClick={() => navigate("/about-simulator")}
+              className="bg-sky-500 text-white hover:shadow-xl text-lg px-12 py-6 h-auto rounded-xl shadow-lg w-full sm:w-auto flex items-center justify-center gap-2 mx-auto hover:bg-sky-500">
+              <BookOpenIcon className="w-6 h-6 text-white" />
+              Sobre este simulador
             </Button>
           )}
         </div>

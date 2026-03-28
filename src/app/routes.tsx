@@ -3,6 +3,7 @@ import { Welcome } from "./components/Welcome";
 import { Simulation } from "./components/Simulation";
 import { Results } from "./components/Results";
 import { CreateEmail } from "./components/CreateEmail";
+import { AboutSimulator } from "./components/AboutSimulator";
 
 export const router = createBrowserRouter([
   {
@@ -21,4 +22,8 @@ export const router = createBrowserRouter([
     path: "/create-email",
     Component: CreateEmail,
   },
+  {
+    path: "/about-simulator",
+    Component: AboutSimulator
+  }
 ]);
