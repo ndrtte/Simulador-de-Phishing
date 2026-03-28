@@ -93,7 +93,7 @@ export function CreateEmail() {
                 htmlFor="from"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Sender Name
+                Nombre del remitente
               </label>
               <input
                 type="text"
@@ -113,7 +113,7 @@ export function CreateEmail() {
                 htmlFor="fromEmail"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Sender Email
+                Correo electrónico del remitente
               </label>
               <input
                 type="email"
@@ -133,7 +133,7 @@ export function CreateEmail() {
                 htmlFor="subject"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Subject
+                
               </label>
               <input
                 type="text"
@@ -153,7 +153,7 @@ export function CreateEmail() {
                 htmlFor="body"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Message Content
+                Contenido del Mensaje
               </label>
               <textarea
                 id="body"
