@@ -105,7 +105,7 @@ export function AboutSimulator() {
                     Iniciar
                   </h3>
                   <p className="text-gray-700">
-                    Después de seleccionar la cantidad de emails, haz clic en "Comenzar Simulación"
+                    Después de seleccionar la cantidad de emails, haz clic en "Iniciar Simulación"
                     para empezar el entrenamiento.
                   </p>
                 </div>

@@ -63,10 +63,11 @@ export function Welcome() {
                 <button
                   key={count}
                   onClick={() => setEmailCount(count)}
-                  className={`p-6 rounded-xl border-2 transition-all ${emailCount === count
+                  className={`p-6 rounded-xl border-2 transition-all ${
+                    emailCount === count
                       ? "border-blue-500 bg-blue-50"
                       : "border-gray-300 bg-white hover:border-gray-400"
-                    }`}
+                  }`}
                 >
                   <div
                     className="text-3xl font-bold mb-2"
@@ -166,7 +167,9 @@ export function Welcome() {
           {!showConfig && (
             <Button
               onClick={() => navigate("/about-simulator")}
-              className="bg-sky-500 text-white hover:shadow-xl text-lg px-12 py-6 h-auto rounded-xl shadow-lg w-full sm:w-auto flex items-center justify-center gap-2 mx-auto hover:bg-sky-500">
+              className="text-lg px-12 py-6 h-auto rounded-xl   hover:shadow-xl transition-all flex items-center w-full sm:w-auto"
+              style={{ backgroundColor: "#0EA5E9" }}
+            >
               <BookOpenIcon className="w-6 h-6 text-white" />
               Sobre este simulador
             </Button>
