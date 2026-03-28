@@ -1,11 +1,13 @@
 
-  # Phishing Email Simulation Platform UI
+  # Simulador de Phishing en entornos de correo electronico
 
-  This is a code bundle for Phishing Email Simulation Platform UI. The original project is available at https://www.figma.com/design/JA6HZipJ1O41e5Vld6FC9L/Phishing-Email-Simulation-Platform-UI.
+ Para la clase de Teoría de la Simulación (IS-910)
 
-  ## Running the code
 
-  Run `npm i` to install the dependencies.
 
-  Run `npm run dev` to start the development server.
-  
+  Desarrollado por:
+
+  - Andrea Fernanda Morel Alemán
+  - José Daniel Álvarez Mejía
+  - Adison Josué Menocal Mondragón
+  - Johnny Alexander Alvarenga Ortez
