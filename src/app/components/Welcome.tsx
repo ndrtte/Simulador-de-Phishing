@@ -102,7 +102,7 @@ export function Welcome() {
                 style={{ color: "#3B82F6" }}
               />
               <h3 className="font-semibold text-gray-900 mb-2">
-                “Escenarios realistas
+                Escenarios realistas
               </h3>
               <p className="text-sm text-gray-600">
                 Practica con ejemplos reales de phishing.
