@@ -133,7 +133,7 @@ export function CreateEmail() {
                 htmlFor="subject"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                
+                Asunto
               </label>
               <input
                 type="text"
