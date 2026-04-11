@@ -226,8 +226,8 @@ export function Simulation() {
                   key={email.idCorreo}
                   onClick={() => setSelectedEmail(email)}
                   className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${selectedEmail?.idCorreo === email.idCorreo
-                      ? "border-l-4 pl-3"
-                      : "hover:bg-gray-50"
+                    ? "border-l-4 pl-3"
+                    : "hover:bg-gray-50"
                     }`}
                   style={{
                     backgroundColor:
@@ -322,7 +322,7 @@ export function Simulation() {
               <div className="flex-1 overflow-y-auto p-6">
                 <div className="max-w-3xl">
                   <ReactMarkdown>
-                    {selectedEmail.cuerpoCorreo}
+                    {selectedEmail.cuerpoCorreo.replace(/\\n/g, "\n")}
                   </ReactMarkdown>
                 </div>
               </div>
@@ -380,8 +380,8 @@ export function Simulation() {
                         ? "#F0FDF4"
                         : "#FEF2F2",
                       border: `1px solid ${responses[selectedEmail.idCorreo].correct
-                          ? "#22C55E"
-                          : "#EF4444"
+                        ? "#22C55E"
+                        : "#EF4444"
                         }`,
                     }}
                   >
