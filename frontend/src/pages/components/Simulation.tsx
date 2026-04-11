@@ -277,7 +277,7 @@ export function Simulation() {
                         {email.asunto}
                       </p>
                       <p className="text-xs text-gray-500 line-clamp-2">
-                        {email.cuerpoCorreo}
+                        {email.cuerpoCorreo.replace(/\\n/g, "\n")}
                       </p>
                     </div>
                   </div>
