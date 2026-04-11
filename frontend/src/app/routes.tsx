@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router";
-import { Welcome } from "./components/Welcome";
-import { Simulation } from "./components/Simulation";
-import { Results } from "./components/Results";
-import { CreateEmail } from "./components/CreateEmail";
-import { AboutSimulator } from "./components/AboutSimulator";
+
+import { Welcome } from "../pages/components/Welcome";
+import { Simulation } from "../pages/components/Simulation";
+import { Results } from "../pages/components/Results";
+import { CreateEmail } from "../pages/components/CreateEmail";
+import { AboutSimulator } from "../pages/components/AboutSimulator";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/about-simulator",
-    Component: AboutSimulator
-  }
+    Component: AboutSimulator,
+  },
 ]);
