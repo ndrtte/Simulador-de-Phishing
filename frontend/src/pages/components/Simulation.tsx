@@ -29,29 +29,6 @@ export function Simulation() {
   const [correos, setCorreos] = useState<Correo[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const loadEmails = async () => {
-      const data = await obtenerCorreos(dificultad, cantidad);
-
-      setCorreos(data);
-    };
-
-    loadEmails();
-  }, []);
-  useEffect(() => {
-    const loadEmails = async () => {
-      const systemEmails = await obtenerCorreos(dificultad, cantidad);
-
-      const customEmails = JSON.parse(
-        localStorage.getItem("customEmails") || "[]",
-      );
-
-      setCorreos([...systemEmails, ...customEmails]);
-    };
-
-    loadEmails();
-  }, []);
-
   const [allEmails, setAllEmails] = useState<Correo[]>(() => {
     const customEmails = JSON.parse(
       localStorage.getItem("customEmails") || "[]",
@@ -71,16 +48,23 @@ export function Simulation() {
     message: string;
   } | null>(null);
 
-  // Initialize emails on mount
+
   useEffect(() => {
     const loadEmails = async () => {
       const systemEmails = await obtenerCorreos(dificultad, cantidad);
 
       const customEmails = JSON.parse(
-        localStorage.getItem("customEmails") || "[]",
+        localStorage.getItem("customEmails") || "[]"
       );
 
-      setEmails([...systemEmails, ...customEmails]);
+      const safeCustomEmails = customEmails.map((e: any) => ({
+        idCorreo: e.idCorreo ?? crypto.randomUUID(),
+        nombreRemitente: e.nombreRemitente ?? "Desconocido",
+        asunto: e.asunto ?? "",
+        cuerpoCorreo: e.cuerpoCorreo ?? "",
+      }));
+
+      setEmails([...systemEmails, ...safeCustomEmails]);
     };
 
     loadEmails();
@@ -276,9 +260,13 @@ export function Simulation() {
                       <p className="text-sm text-gray-700 truncate mb-1">
                         {email.asunto}
                       </p>
-                      <p className="text-xs text-gray-500 line-clamp-2">
-                        {email.cuerpoCorreo.replace(/\\n/g, "\n")}
-                      </p>
+                      {email?.cuerpoCorreo ? (
+                        <ReactMarkdown>
+                          {email.cuerpoCorreo.replace(/\\n/g, "\n")}
+                        </ReactMarkdown>
+                      ) : (
+                        <p className="text-gray-400">Selecciona un correo</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -321,9 +309,13 @@ export function Simulation() {
               {/* Email Body */}
               <div className="flex-1 overflow-y-auto p-6">
                 <div className="max-w-3xl">
-                  <ReactMarkdown>
-                    {selectedEmail.cuerpoCorreo.replace(/\\n/g, "\n")}
-                  </ReactMarkdown>
+                  {selectedEmail?.cuerpoCorreo ? (
+                    <ReactMarkdown>
+                      {selectedEmail.cuerpoCorreo.replace(/\\n/g, "\n")}
+                    </ReactMarkdown>
+                  ) : (
+                    <p className="text-gray-400">Selecciona un correo</p>
+                  )}
                 </div>
               </div>
 
