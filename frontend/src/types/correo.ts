@@ -3,7 +3,11 @@ export interface Correo {
   nombreRemitente: string;
   correoRemitente: string;
   asunto: string;
-  esPhishing: number;
   cuerpoCorreo: string;
-  dificultad: number;
+  esPhishing: number;
+
+  dificultad: {
+    idDificultad: number;
+    dificultad: string;
+  };
 }

@@ -6,7 +6,7 @@ export const obtenerCorreos = async (
   cantidad: number
 ): Promise<Correo[]> => {
   const response = await axios.get<Correo[]>(
-    "http://localhost:8080/correos",
+    "http://localhost:8080/api/correos/obtener-correos",
     {
       params: { dificultad, cantidad },
     }

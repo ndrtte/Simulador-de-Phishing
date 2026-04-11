@@ -7,16 +7,22 @@ type DifficultyLevel = "facil" | "intermedio" | "dificil";
 
 export function Welcome() {
   const navigate = useNavigate();
-  const [emailCount, setEmailCount] = useState<number>(10);
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>("intermedio");
+  const [cantidad, setCantidadEmail] = useState<number>(10);
+  const [dificultad, setDificultad] = useState<number>(1);
   const [showConfig, setShowConfig] = useState(false);
 
   const handleStartSimulation = () => {
     if (!showConfig) {
       setShowConfig(true);
-    } else {
-      navigate("/simulation", { state: { emailCount, difficulty } });
+      return;
     }
+
+    navigate("/simulation", {
+      state: {
+        cantidad,
+        dificultad,
+      },
+    });
   };
 
   return (
@@ -58,20 +64,19 @@ export function Welcome() {
               </p>
               <div className="grid grid-cols-3 gap-4">
                 <button
-                  onClick={() => setDifficulty("facil")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    difficulty === "facil"
+                  onClick={() => setDificultad(1)}
+                  className={`p-6 rounded-xl border-2 transition-all ${dificultad === 1
                       ? "border-green-500 bg-green-50"
                       : "border-gray-300 bg-white hover:border-gray-400"
-                  }`}
+                    }`}
                 >
                   <Target
-                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "facil" ? "text-green-600" : "text-gray-500"}`}
+                    className={`w-8 h-8 mx-auto mb-2 ${dificultad === 1 ? "text-green-600" : "text-gray-500"}`}
                   />
                   <div
                     className="text-lg font-bold mb-1"
                     style={{
-                      color: difficulty === "facil" ? "#22C55E" : "#6B7280",
+                      color: dificultad === 1 ? "#22C55E" : "#6B7280",
                     }}
                   >
                     Fácil
@@ -79,21 +84,20 @@ export function Welcome() {
                   <div className="text-xs text-gray-600">Señales obvias</div>
                 </button>
                 <button
-                  onClick={() => setDifficulty("intermedio")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    difficulty === "intermedio"
+                  onClick={() => setDificultad(2)}
+                  className={`p-6 rounded-xl border-2 transition-all ${dificultad === 2
                       ? "border-blue-500 bg-blue-50"
                       : "border-gray-300 bg-white hover:border-gray-400"
-                  }`}
+                    }`}
                 >
                   <Zap
-                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "intermedio" ? "text-blue-600" : "text-gray-500"}`}
+                    className={`w-8 h-8 mx-auto mb-2 ${dificultad === 2 ? "text-blue-600" : "text-gray-500"}`}
                   />
                   <div
                     className="text-lg font-bold mb-1"
                     style={{
                       color:
-                        difficulty === "intermedio" ? "#3B82F6" : "#6B7280",
+                        dificultad === 2 ? "#3B82F6" : "#6B7280",
                     }}
                   >
                     Intermedio
@@ -101,20 +105,19 @@ export function Welcome() {
                   <div className="text-xs text-gray-600">Señales moderadas</div>
                 </button>
                 <button
-                  onClick={() => setDifficulty("dificil")}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    difficulty === "dificil"
+                  onClick={() => setDificultad(3)}
+                  className={`p-6 rounded-xl border-2 transition-all ${dificultad === 3
                       ? "border-red-500 bg-red-50"
                       : "border-gray-300 bg-white hover:border-gray-400"
-                  }`}
+                    }`}
                 >
                   <Trophy
-                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "dificil" ? "text-red-600" : "text-gray-500"}`}
+                    className={`w-8 h-8 mx-auto mb-2 ${dificultad === 3 ? "text-red-600" : "text-gray-500"}`}
                   />
                   <div
                     className="text-lg font-bold mb-1"
                     style={{
-                      color: difficulty === "dificil" ? "#EF4444" : "#6B7280",
+                      color: dificultad === 3 ? "#EF4444" : "#6B7280",
                     }}
                   >
                     Difícil
@@ -133,17 +136,16 @@ export function Welcome() {
                 {[5, 10, 15].map((count) => (
                   <button
                     key={count}
-                    onClick={() => setEmailCount(count)}
-                    className={`p-6 rounded-xl border-2 transition-all ${
-                      emailCount === count
+                    onClick={() => setCantidadEmail(count)}
+                    className={`p-6 rounded-xl border-2 transition-all ${cantidad === count
                         ? "border-blue-500 bg-blue-50"
                         : "border-gray-300 bg-white hover:border-gray-400"
-                    }`}
+                      }`}
                   >
                     <div
                       className="text-3xl font-bold mb-2"
                       style={{
-                        color: emailCount === count ? "#3B82F6" : "#6B7280",
+                        color: cantidad === count ? "#3B82F6" : "#6B7280",
                       }}
                     >
                       {count}
