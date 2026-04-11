@@ -14,13 +14,12 @@ import {
 import { Button } from "./ui/button";
 import { Correo } from "../../types/correo";
 import { obtenerCorreos } from "../../api/correo.api";
-import { generatePreview } from "../../utils/email";
 import { EmailUI } from "../../types/EmailUI";
+import ReactMarkdown from "react-markdown";
 
 export function Simulation() {
   const navigate = useNavigate();
   const location = useLocation();
-
 
   const { dificultad, cantidad } = location.state as {
     dificultad: number;
@@ -226,11 +225,10 @@ export function Simulation() {
                 <div
                   key={email.idCorreo}
                   onClick={() => setSelectedEmail(email)}
-                  className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${
-                    selectedEmail?.idCorreo === email.idCorreo
+                  className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${selectedEmail?.idCorreo === email.idCorreo
                       ? "border-l-4 pl-3"
                       : "hover:bg-gray-50"
-                  }`}
+                    }`}
                   style={{
                     backgroundColor:
                       selectedEmail?.idCorreo === email.idCorreo
@@ -278,9 +276,8 @@ export function Simulation() {
                       <p className="text-sm text-gray-700 truncate mb-1">
                         {email.asunto}
                       </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {email.cuerpoCorreo.replace(/\n/g, " ").slice(0, 80) +
-                          "..."}
+                      <p className="text-xs text-gray-500 line-clamp-2">
+                        {email.cuerpoCorreo}
                       </p>
                     </div>
                   </div>
@@ -324,9 +321,9 @@ export function Simulation() {
               {/* Email Body */}
               <div className="flex-1 overflow-y-auto p-6">
                 <div className="max-w-3xl">
-                  <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+                  <ReactMarkdown>
                     {selectedEmail.cuerpoCorreo}
-                  </div>
+                  </ReactMarkdown>
                 </div>
               </div>
 
@@ -382,11 +379,10 @@ export function Simulation() {
                       backgroundColor: responses[selectedEmail.idCorreo].correct
                         ? "#F0FDF4"
                         : "#FEF2F2",
-                      border: `1px solid ${
-                        responses[selectedEmail.idCorreo].correct
+                      border: `1px solid ${responses[selectedEmail.idCorreo].correct
                           ? "#22C55E"
                           : "#EF4444"
-                      }`,
+                        }`,
                     }}
                   >
                     {responses[selectedEmail.idCorreo].correct ? (
