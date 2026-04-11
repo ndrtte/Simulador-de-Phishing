@@ -1,16 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
-import {
-  Mail,
-  Flag,
-  Archive,
-  Eye,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Building2,
-  Tag,
-} from "lucide-react";
+import { Mail, Flag, Archive, Eye, CheckCircle, XCircle, AlertTriangle, Building2, Tag } from "lucide-react";
 import { Button } from "./ui/button";
 
 type EmailTag = {
@@ -18,6 +8,8 @@ type EmailTag = {
   color: string;
   bgColor: string;
 };
+
+type DifficultyLevel = "facil" | "intermedio" | "dificil";
 
 type Email = {
   id: number;
@@ -30,191 +22,207 @@ type Email = {
   body: string;
   isCustom?: boolean;
   tags?: EmailTag[];
+  difficulty: DifficultyLevel;
 };
 
 const defaultEmails: Email[] = [
   {
     id: 1,
-    from: "Equipo de Soporte IT",
-    fromEmail: "support@yourcompany.com",
-    subject: "Actualización semanal de seguridad",
-    preview: "Tu resumen semanal de seguridad está listo para revisión...",
+    from: "Equipo de Soporte TI",
+    fromEmail: "soporte@tuempresa.com",
+    subject: "Actualización Semanal de Seguridad",
+    preview: "Tu resumen de seguridad semanal está listo para revisar...",
     time: "10:30 AM",
     isPhishing: false,
-    body: "Hola,\n\nTu reporte semanal de seguridad ya está disponible. Aquí tienes un resumen:\n\n• No se detectaron intentos de acceso sospechosos\n• Todos los sistemas funcionando correctamente\n• No hay alertas de seguridad esta semana\n\nGracias por mantenerte alerta.\n\nSaludos,\nEquipo de Soporte IT\nyourcompany.com",
+    body: "Hola,\n\nTu reporte semanal de seguridad ya está disponible. Aquí un resumen:\n\n• No se detectaron intentos de inicio de sesión sospechosos\n• Todos los sistemas operando normalmente\n• Sin alertas de seguridad esta semana\n\nGracias por mantenerte vigilante.\n\nSaludos,\nEquipo de Soporte TI\ntuempresa.com",
     tags: [{ label: "Trabajo", color: "#3B82F6", bgColor: "#DBEAFE" }],
+    difficulty: "intermedio",
   },
   {
     id: 2,
     from: "Alerta de Seguridad",
-    fromEmail: "no-reply@secure-verify-account.net",
-    subject: "URGENTE: Verifica tu cuenta ahora",
-    preview: "Tu cuenta será suspendida en 24 horas si no verificas...",
+    fromEmail: "no-responder@verificar-cuenta-segura.net",
+    subject: "URGENTE: Verifica tu Cuenta Ahora",
+    preview: "Tu cuenta será suspendida en 24 horas a menos que la verifiques...",
     time: "9:45 AM",
     isPhishing: true,
-    body: "ALERTA DE SEGURIDAD URGENTE\n\nEstimado usuario,\n\nHemos detectado actividad inusual en tu cuenta. Para evitar la suspensión permanente, debes verificar tu identidad inmediatamente.\n\nHaz clic aquí para verificar: http://secure-verify-account.net/login\n\nSolo tienes 24 horas para completar este proceso o tu cuenta será cerrada permanentemente.\n\nNo ignores este mensaje.\n\nDepartamento de Seguridad",
+    body: "ALERTA DE SEGURIDAD URGENTE\n\nEstimado Usuario,\n\nHemos detectado actividad inusual en tu cuenta. Para prevenir la suspensión permanente, debes verificar tu identidad inmediatamente.\n\nHaz clic aquí para verificar: http://verificar-cuenta-segura.net/login\n\nSolo tienes 24 horas para completar esta verificación o tu cuenta será cerrada permanentemente.\n\nNo ignores este mensaje.\n\nDepartamento de Seguridad",
     tags: [{ label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" }],
+    difficulty: "facil",
   },
   {
     id: 3,
     from: "LinkedIn",
-    fromEmail: "notifications@linkedin.com",
-    subject: "Tienes 5 nuevas visitas en tu perfil",
-    preview: "Mira quién ha visto tu perfil esta semana...",
+    fromEmail: "notificaciones@linkedin.com",
+    subject: "Tienes 5 nuevas vistas de perfil",
+    preview: "Mira quién ha visto tu perfil de LinkedIn esta semana...",
     time: "Ayer",
     isPhishing: false,
-    body: "Hola,\n\n¡Tu perfil está recibiendo atención! Estas son las personas que han visto tu perfil recientemente:\n\n• Sarah Johnson - Directora de Marketing\n• Michael Chen - Ingeniero de Software\n• Jessica Williams - Gerente de Producto\n• David Brown - CEO\n• Emily Davis - Especialista en RRHH\n\nMira todas las visitas en LinkedIn.\n\nSaludos,\nEl equipo de LinkedIn",
+    body: "Hola,\n\n¡Tu perfil está recibiendo atención! Aquí están quienes vieron tu perfil recientemente:\n\n• María González - Directora de Marketing\n• Carlos Ramírez - Ingeniero de Software\n• Ana Torres - Gerente de Producto\n• Luis Martínez - CEO\n• Patricia López - Especialista en RRHH\n\nVer todas las vistas de perfil en LinkedIn.\n\nSaludos,\nEl Equipo de LinkedIn",
     tags: [{ label: "Social", color: "#8B5CF6", bgColor: "#EDE9FE" }],
+    difficulty: "intermedio",
   },
   {
     id: 4,
     from: "PayPal",
-    fromEmail: "service@paypa1-security.com",
-    subject: "Actividad de pago inusual detectada",
-    preview: "Se procesó un pago de $847.99 desde tu cuenta...",
+    fromEmail: "servicio@paypa1-seguridad.com",
+    subject: "Actividad de Pago Inusual Detectada",
+    preview: "Un pago de $847.99 acaba de procesarse desde tu cuenta...",
     time: "Ayer",
     isPhishing: true,
-    body: "Aviso de Seguridad PayPal\n\nHemos detectado un pago de $847.99 USD desde tu cuenta.\n\nDetalles de la transacción:\nMonto: $847.99 USD\nDestinatario: TechStore International\nFecha: 18 de marzo de 2026\n\nSi no autorizaste este pago, inicia sesión inmediatamente:\nhttp://paypa1-security.com/dispute-transaction\n\nNota: El correo contiene un '1' en lugar de 'l' en paypal, una técnica común de phishing.\n\nEquipo de Seguridad PayPal",
+    body: "Aviso de Seguridad de PayPal\n\nHemos detectado un pago de $847.99 USD desde tu cuenta.\n\nDetalles de la Transacción:\nMonto: $847.99 USD\nDestinatario: TechStore International\nFecha: 18 de Marzo, 2026\n\nSi no autorizaste este pago, por favor inicia sesión inmediatamente:\nhttp://paypa1-seguridad.com/disputa-transaccion\n\nNota: El correo del remitente contiene un '1' en lugar de 'l' en paypal - una táctica común de phishing.\n\nEquipo de Seguridad de PayPal",
     tags: [
       { label: "Banco", color: "#059669", bgColor: "#D1FAE5" },
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
     ],
+    difficulty: "facil",
   },
   {
     id: 5,
     from: "Amazon",
-    fromEmail: "orders@amazon.com",
+    fromEmail: "pedidos@amazon.com",
     subject: "Tu pedido ha sido enviado",
     preview: "El pedido #123-4567890-1234567 está en camino...",
     time: "Hace 2 días",
     isPhishing: false,
-    body: "Hola,\n\n¡Buenas noticias! Tu pedido ha sido enviado.\n\nNúmero de pedido: #123-4567890-1234567\nTransportista: UPS\nNúmero de seguimiento: 1Z999AA10123456784\n\nEntrega estimada: 20 de marzo de 2026\n\nRastrea tu paquete en Amazon.com\n\nGracias por comprar con nosotros.\n\nServicio al Cliente Amazon",
+    body: "Hola,\n\n¡Buenas noticias! Tu pedido ha sido enviado.\n\nNúmero de Pedido: #123-4567890-1234567\nTransportista: UPS\nNúmero de Rastreo: 1Z999AA10123456784\n\nEntrega Estimada: 20 de Marzo, 2026\n\nRastrear tu paquete en Amazon.com\n\n¡Gracias por comprar con nosotros!\n\nServicio al Cliente de Amazon",
     tags: [{ label: "Compras", color: "#F59E0B", bgColor: "#FEF3C7" }],
+    difficulty: "intermedio",
   },
   {
     id: 6,
-    from: "CEO - John Smith",
-    fromEmail: "jsmith@temp-mail-service.biz",
-    subject: "Urgente: Necesito tu ayuda",
+    from: "CEO - Juan Pérez",
+    fromEmail: "jperez@servicio-correo-temp.biz",
+    subject: "Urgente: Necesito tu Ayuda",
     preview: "Necesito que manejes algo confidencial de inmediato...",
     time: "Hace 3 días",
     isPhishing: true,
-    body: "Hola,\n\nEstoy en reuniones continuas y necesito que manejes algo urgente.\n\n¿Puedes comprar $500 en tarjetas de regalo (Apple o Google) para un evento de clientes?\n\nEnvíame los códigos por correo. Te reembolsaré inmediatamente.\n\nEsto es confidencial y urgente.\n\nGracias,\nJohn Smith\nCEO",
+    body: "Hola,\n\nEstoy en reuniones consecutivas y necesito que manejes algo urgente.\n\n¿Puedes comprar $500 en tarjetas de regalo (Apple o Google) para un evento de apreciación de clientes? Las necesitamos en una hora.\n\nPor favor cómpralas y envíame los códigos por correo. Te reembolsaré inmediatamente.\n\nEsto es urgente y confidencial.\n\nGracias,\nJuan Pérez\nCEO",
     tags: [
       { label: "Trabajo", color: "#3B82F6", bgColor: "#DBEAFE" },
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
     ],
+    difficulty: "facil",
   },
   {
     id: 7,
-    from: "Cuenta Microsoft",
-    fromEmail: "account-security@microsoft.com",
+    from: "Cuenta de Microsoft",
+    fromEmail: "seguridad-cuenta@microsoft.com",
     subject: "Se agregó información de seguridad a tu cuenta",
-    preview: "Se agregó un nuevo método de verificación...",
+    preview: "Se añadió un nuevo método de seguridad a tu cuenta Microsoft...",
     time: "Hace 4 días",
     isPhishing: false,
-    body: "Hola,\n\nSe agregó recientemente un nuevo método de verificación a tu cuenta Microsoft:\n\nMétodo: Aplicación autenticadora\nDispositivo: iPhone 13\nUbicación: San Francisco, CA\nFecha: 14 de marzo de 2026\n\nSi no fuiste tú, protege tu cuenta en account.microsoft.com\n\nSaludos,\nEquipo Microsoft",
+    body: "Hola,\n\nRecientemente se agregó un nuevo método de verificación de seguridad a tu cuenta de Microsoft:\n\nMétodo: Aplicación autenticadora\nDispositivo: iPhone 13\nUbicación: Ciudad de México, MX\nFecha: 14 de Marzo, 2026\n\nSi no fuiste tú, por favor asegura tu cuenta inmediatamente en account.microsoft.com\n\nSaludos,\nEquipo de Cuenta Microsoft",
     tags: [{ label: "Seguridad", color: "#6366F1", bgColor: "#E0E7FF" }],
+    difficulty: "dificil",
   },
   {
     id: 8,
     from: "Seguridad Bancaria",
-    fromEmail: "alerts@bankofamerica-secure.com",
-    subject: "Tu cuenta ha sido bloqueada",
-    preview: "Hemos bloqueado tu cuenta por actividad sospechosa...",
+    fromEmail: "alertas@banco-seguro.com",
+    subject: "Tu Cuenta Ha Sido Bloqueada",
+    preview: "Hemos bloqueado tu cuenta debido a actividad sospechosa...",
     time: "Hace 5 días",
     isPhishing: true,
-    body: "ALERTA DE SEGURIDAD DE CUENTA\n\nTu cuenta ha sido bloqueada temporalmente debido a múltiples intentos fallidos de inicio de sesión.\n\nPara desbloquearla, verifica tu identidad:\n\nUsuario: [Tu Usuario]\nSSN: [Últimos 4 dígitos]\nNúmero de cuenta: [Número completo]\n\nHaz clic aquí para verificar: http://bankofamerica-secure.com/unlock\n\nImportante: Los bancos reales nunca solicitan información sensible completa por correo.\n\nDepartamento de Seguridad",
+    body: "ALERTA DE SEGURIDAD DE CUENTA\n\nTu cuenta ha sido bloqueada temporalmente debido a múltiples intentos fallidos de inicio de sesión.\n\nPara desbloquear tu cuenta, por favor verifica tu identidad:\n\nNombre de usuario: [Tu Nombre de Usuario]\nRFC: [Últimos 4 dígitos]\nNúmero de Cuenta: [Número de Cuenta Completo]\n\nHaz clic aquí para verificar: http://banco-seguro.com/desbloquear\n\nImportante: Los bancos reales nunca piden RFC completo o números de cuenta por correo.\n\nDepartamento de Seguridad Bancaria",
     tags: [
       { label: "Banco", color: "#059669", bgColor: "#D1FAE5" },
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
     ],
+    difficulty: "facil",
   },
   {
     id: 9,
     from: "Netflix",
-    fromEmail: "billing@netflix.com",
+    fromEmail: "facturacion@netflix.com",
     subject: "Tu método de pago necesita actualización",
-    preview: "Tenemos problemas con tu información de pago...",
+    preview: "Estamos teniendo problemas con tu información de facturación actual...",
     time: "Hace 6 días",
     isPhishing: false,
-    body: "Hola,\n\nEstamos teniendo problemas al procesar tu pago de Netflix.\n\nPara mantener tu cuenta activa, actualiza tu método de pago en los próximos 5 días.\n\nActualizar método de pago\n\nSi ya lo hiciste, ignora este mensaje.\n\nGracias,\nEquipo de Netflix",
+    body: "Hola,\n\nEstamos teniendo problemas para procesar tu pago de tu membresía de Netflix.\n\nPara mantener tu cuenta activa, por favor actualiza tu información de pago en los próximos 5 días.\n\nActualizar Método de Pago\n\nSi recientemente actualizaste tu información de pago, por favor ignora este mensaje.\n\nGracias,\nEl Equipo de Netflix",
     tags: [{ label: "Suscripción", color: "#EC4899", bgColor: "#FCE7F3" }],
+    difficulty: "dificil",
   },
   {
     id: 10,
-    from: "Notificación IRS",
-    fromEmail: "notices@irs-refund.biz",
-    subject: "Reembolso de impuestos disponible",
-    preview: "Eres elegible para un reembolso de $1,847...",
+    from: "Aviso SAT",
+    fromEmail: "avisos@sat-devolucion.biz",
+    subject: "Devolución de Impuestos Disponible - Reclama Ahora",
+    preview: "Eres elegible para una devolución de impuestos de $1,847...",
     time: "Hace 1 semana",
     isPhishing: true,
-    body: "SERVICIO DE IMPUESTOS INTERNOS\n\nEstimado contribuyente,\n\nNuestros registros indican que eres elegible para un reembolso de $1,847.00.\n\nPara reclamarlo, verifica tu información:\n- Número de Seguro Social\n- Datos bancarios\n- Licencia de conducir\n\nReclamar reembolso: http://irs-refund.biz/claim\n\nEsta oferta expira en 48 horas.\n\nDepartamento de Reembolsos",
+    body: "SERVICIO DE ADMINISTRACIÓN TRIBUTARIA\n\nEstimado Contribuyente,\n\nNuestros registros indican que eres elegible para una devolución de impuestos de $1,847.00.\n\nPara reclamar tu devolución, por favor verifica tu información:\n- RFC Completo\n- Detalles de Cuenta Bancaria\n- Número de Licencia de Conducir\n\nReclamar Devolución: http://sat-devolucion.biz/reclamar\n\nEsta oferta expira en 48 horas.\n\nDepartamento de Devoluciones SAT",
     tags: [
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
       { label: "Promoción", color: "#10B981", bgColor: "#D1FAE5" },
     ],
+    difficulty: "facil",
   },
   {
     id: 11,
     from: "Spotify",
-    fromEmail: "support@spotify.com",
-    subject: "¡Tu Spotify Wrapped 2026 está listo!",
-    preview: "Descubre tus canciones y artistas más escuchados...",
+    fromEmail: "soporte@spotify.com",
+    subject: "¡Tu Spotify Wrapped 2026 está aquí!",
+    preview: "Descubre tus canciones y artistas más escuchados este año...",
     time: "Hace 1 semana",
     isPhishing: false,
-    body: "¡Hola amante de la música!\n\nTu Spotify Wrapped 2026 ya está disponible.\n\nArtista más escuchado: Taylor Swift\nCanción más escuchada: Anti-Hero\nMinutos escuchados: 45,230\n\nVer Wrapped\n\n¡Gracias por otro gran año!\nEquipo Spotify",
+    body: "¡Hola amante de la música!\n\nTu Spotify Wrapped 2026 está listo. Mira tus canciones, artistas y podcasts favoritos de este año.\n\nTu Artista Principal: Bad Bunny\nTu Canción Principal: Monaco\nMinutos Totales Escuchados: 45,230\n\nVer Tu Wrapped\n\n¡Gracias por otro gran año!\nEl Equipo de Spotify",
     tags: [{ label: "Entretenimiento", color: "#14B8A6", bgColor: "#CCFBF1" }],
+    difficulty: "intermedio",
   },
   {
     id: 12,
     from: "Soporte Apple",
-    fromEmail: "support@apple-security.net",
+    fromEmail: "soporte@apple-seguridad.net",
     subject: "Tu Apple ID ha sido bloqueado",
-    preview: "Actividad sospechosa detectada...",
+    preview: "Actividad sospechosa detectada en tu Apple ID...",
     time: "Hace 1 semana",
     isPhishing: true,
-    body: "Alerta de seguridad Apple ID\n\nTu cuenta ha sido bloqueada por intentos sospechosos.\n\nDispositivo: PC Windows\nUbicación: Moscú, Rusia\nFecha: 15 de marzo de 2026\n\nDesbloquea tu cuenta:\nhttp://apple-security.net/unlock\n\nProporciona tu contraseña para restaurar acceso.\n\nEquipo Apple",
+    body: "Alerta de Seguridad de Apple ID\n\nTu Apple ID ha sido bloqueado debido a intentos de inicio de sesión sospechosos desde un dispositivo desconocido.\n\nDispositivo: Windows PC\nUbicación: Moscú, Rusia\nHora: 15 de Marzo, 2026 2:34 AM\n\nDesbloquea tu cuenta inmediatamente:\nhttp://apple-seguridad.net/desbloquear\n\nProporciona tu contraseña de Apple ID y código de verificación para restaurar el acceso.\n\nEquipo de Seguridad de Apple",
     tags: [
       { label: "Seguridad", color: "#6366F1", bgColor: "#E0E7FF" },
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
     ],
+    difficulty: "facil",
   },
   {
     id: 13,
     from: "Google Workspace",
     fromEmail: "admin@googleworkspace.com",
     subject: "Límite de almacenamiento alcanzado",
-    preview: "Tu Google Drive está al 95%...",
+    preview: "Tu almacenamiento de Google Drive está al 95%...",
     time: "Hace 2 semanas",
     isPhishing: false,
-    body: "Hola,\n\nTu almacenamiento está casi lleno (19 de 20 GB).\n\nPuedes:\n• Eliminar archivos\n• Comprar más almacenamiento\n\nAdministrar almacenamiento\n\nGracias,\nEquipo Google",
+    body: "Hola,\n\nTu almacenamiento de Google Drive está casi lleno (19 GB de 20 GB usados).\n\nPara continuar subiendo archivos y recibiendo correos, considera:\n• Eliminar archivos innecesarios\n• Actualizar a Google One para más almacenamiento\n\nAdministrar Almacenamiento\n\nGracias,\nEquipo de Google Workspace",
     tags: [{ label: "Trabajo", color: "#3B82F6", bgColor: "#DBEAFE" }],
+    difficulty: "dificil",
   },
   {
     id: 14,
-    from: "DHL Entregas",
-    fromEmail: "tracking@dh1-delivery.com",
-    subject: "Entrega fallida - acción requerida",
-    preview: "No pudimos entregar tu paquete...",
+    from: "Entrega DHL",
+    fromEmail: "rastreo@dh1-entrega.com",
+    subject: "Fallo en entrega de paquete - Acción Requerida",
+    preview: "Intentamos entregar tu paquete pero no había nadie en casa...",
     time: "Hace 2 semanas",
     isPhishing: true,
-    body: "Aviso DHL\n\nIntentamos entregar tu paquete pero no había nadie.\n\nPara reprogramar:\nhttp://dh1-delivery.com/reschedule\n\nNota: El dominio usa '1' en lugar de 'l'.\n\nServicio DHL",
+    body: "Aviso de Entrega DHL Express\n\nIntentamos entregar el paquete #DHL7849362847 pero no había nadie disponible para recibirlo.\n\nDetalles del Paquete:\nRastreo: DHL7849362847\nRemitente: Amazon\nValor: $427.99\n\nPara reprogramar la entrega, confirma tu dirección y paga la tarifa de reentrega de $3.99:\nhttp://dh1-entrega.com/reprogramar\n\nNota: El dominio usa '1' en lugar de 'l' en DHL.\n\nServicio al Cliente DHL",
     tags: [
       { label: "Entrega", color: "#F97316", bgColor: "#FFEDD5" },
       { label: "Urgente", color: "#DC2626", bgColor: "#FEE2E2" },
     ],
+    difficulty: "facil",
   },
   {
     id: 15,
     from: "GitHub",
     fromEmail: "noreply@github.com",
-    subject: "Nuevo push en tu repositorio",
-    preview: "Se agregaron 3 commits...",
+    subject: "Nuevo push a tu repositorio",
+    preview: "Alguien hizo push de 3 commits a tu rama principal...",
     time: "Hace 2 semanas",
     isPhishing: false,
-    body: "Hola,\n\nHubo actividad reciente en tu repositorio.\n\n3 commits nuevos:\n• Actualizar README\n• Corregir bug\n• Nueva feature\n\nVer en GitHub\n\nSaludos,\nGitHub",
+    body: "Hola,\n\nHa habido actividad reciente en tu repositorio 'mi-proyecto'.\n\n3 nuevos commits en main:\n• Actualizar README.md\n• Corregir bug de autenticación\n• Agregar nueva característica\n\nCommiteado por: juan-dev\n\nVer Cambios en GitHub\n\n¡Feliz codificación!\nGitHub",
     tags: [{ label: "Trabajo", color: "#3B82F6", bgColor: "#DBEAFE" }],
+    difficulty: "intermedio",
   },
 ];
 
@@ -222,11 +230,12 @@ export function Simulation() {
   const navigate = useNavigate();
   const location = useLocation();
   const emailCount = location.state?.emailCount || 10;
+  const difficulty = (location.state?.difficulty || "intermedio") as DifficultyLevel;
 
   // Load custom emails from localStorage and merge with default emails
   const [allEmails, setAllEmails] = useState<Email[]>(() => {
     const customEmails = JSON.parse(
-      localStorage.getItem("customEmails") || "[]",
+      localStorage.getItem("customEmails") || "[]"
     );
     return [...defaultEmails, ...customEmails];
   });
@@ -234,36 +243,41 @@ export function Simulation() {
   // Select only the specified number of emails
   const [emails, setEmails] = useState<Email[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
-  const [responses, setResponses] = useState<{
-    [key: number]: { action: string; correct: boolean };
-  }>({});
-  const [currentFeedback, setCurrentFeedback] = useState<{
-    correct: boolean;
-    message: string;
-  } | null>(null);
+  const [responses, setResponses] = useState<{ [key: number]: { action: string; correct: boolean } }>({});
+  const [currentFeedback, setCurrentFeedback] = useState<{ correct: boolean; message: string } | null>(null);
 
   // Initialize emails on mount
   useEffect(() => {
     const customEmails = JSON.parse(
-      localStorage.getItem("customEmails") || "[]",
+      localStorage.getItem("customEmails") || "[]"
     );
     const mergedEmails = [...defaultEmails, ...customEmails];
     setAllEmails(mergedEmails);
 
+    // Filter emails by difficulty level
+    let filteredEmails = mergedEmails;
+    if (difficulty === "facil") {
+      // Easy: only emails marked as "facil" (obvious phishing)
+      filteredEmails = mergedEmails.filter(email => email.difficulty === "facil" || email.isCustom);
+    } else if (difficulty === "intermedio") {
+      // Medium: emails marked as "facil" and "intermedio"
+      filteredEmails = mergedEmails.filter(email =>
+        email.difficulty === "facil" || email.difficulty === "intermedio" || email.isCustom
+      );
+    }
+    // For "dificil", use all emails (no filter)
+
     // Shuffle and select emails
-    const shuffled = [...mergedEmails].sort(() => Math.random() - 0.5);
+    const shuffled = [...filteredEmails].sort(() => Math.random() - 0.5);
     const selected = shuffled.slice(0, emailCount);
     setEmails(selected);
     setSelectedEmail(selected[0] || null);
-  }, [emailCount]);
+  }, [emailCount, difficulty]);
 
   const totalEmails = emails.length;
   const completedEmails = Object.keys(responses).length;
-  const currentEmailIndex = selectedEmail
-    ? emails.findIndex((e) => e.id === selectedEmail.id) + 1
-    : 0;
-  const progressPercentage =
-    totalEmails > 0 ? (completedEmails / totalEmails) * 100 : 0;
+  const currentEmailIndex = selectedEmail ? emails.findIndex(e => e.id === selectedEmail.id) + 1 : 0;
+  const progressPercentage = totalEmails > 0 ? (completedEmails / totalEmails) * 100 : 0;
 
   const handleAction = (action: "report" | "ignore" | "open") => {
     if (!selectedEmail || responses[selectedEmail.id]) return;
@@ -273,21 +287,20 @@ export function Simulation() {
 
     if (selectedEmail.isPhishing && action === "report") {
       correct = true;
-      message = "¡Correcto! Este era un correo electrónico de phishing.";
+      message = "¡Correcto! Este era un email de phishing.";
     } else if (!selectedEmail.isPhishing && action === "open") {
       correct = true;
-      message = "¡Correcto! Este era un correo electrónico legítimo.";
+      message = "¡Correcto! Este era un email legítimo.";
     } else if (selectedEmail.isPhishing && action === "open") {
       correct = false;
-      message =
-        "Incorrecto. Se trataba de un correo electrónico de phishing; deberías haberlo denunciado.";
+      message = "Incorrecto. Este era un email de phishing - deberías haberlo reportado.";
     } else if (!selectedEmail.isPhishing && action === "report") {
       correct = false;
-      message = "Incorrecto. Este era un correo electrónico legítimo.";
+      message = "Incorrecto. Este era un email legítimo.";
     } else {
       // Ignore action
       correct = false;
-      message = "Usted optó por ignorar este correo electrónico.";
+      message = "Elegiste ignorar este email.";
     }
 
     setResponses((prev) => ({
@@ -305,16 +318,10 @@ export function Simulation() {
 
   const handleFinish = () => {
     // Pass results via state to results page
-    const correctCount = Object.values(responses).filter(
-      (r) => r.correct,
-    ).length;
+    const correctCount = Object.values(responses).filter((r) => r.correct).length;
     const totalCount = Object.keys(responses).length;
-    const detectionRate =
-      totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
-    const errorRate =
-      totalCount > 0
-        ? Math.round(((totalCount - correctCount) / totalCount) * 100)
-        : 0;
+    const detectionRate = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+    const errorRate = totalCount > 0 ? Math.round(((totalCount - correctCount) / totalCount) * 100) : 0;
 
     navigate("/results", {
       state: {
@@ -328,23 +335,19 @@ export function Simulation() {
   };
 
   return (
-    <div
-      className="h-screen flex flex-col"
-      style={{ backgroundColor: "#F5F7FA" }}
-    >
+    <div className="h-screen flex flex-col" style={{ backgroundColor: "#F5F7FA" }}>
       {/* Header with Progress */}
       <div className="bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Email Inbox</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Bandeja de Entrada</h1>
             <p className="text-sm text-gray-600">
-              Revisa cada correo electrónico y decide si es seguro o si se trata
-              de phishing.
+              Revisa cada email y decide si es seguro o phishing
             </p>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm text-gray-600">Progress</p>
+              <p className="text-sm text-gray-600">Progreso</p>
               <p className="text-lg font-semibold" style={{ color: "#3B82F6" }}>
                 {completedEmails} / {totalEmails}
               </p>
@@ -355,7 +358,7 @@ export function Simulation() {
                 className="rounded-lg"
                 style={{ backgroundColor: "#22C55E" }}
               >
-                View Results
+                Ver Resultados
               </Button>
             )}
           </div>
@@ -375,7 +378,7 @@ export function Simulation() {
         {/* Current Email Indicator */}
         {selectedEmail && (
           <div className="mt-2 text-sm text-gray-600">
-            Viewing Email {currentEmailIndex} of {totalEmails}
+            Viendo Email {currentEmailIndex} de {totalEmails}
           </div>
         )}
       </div>
@@ -387,7 +390,7 @@ export function Simulation() {
           <div className="p-4 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900 flex items-center gap-2">
               <Mail className="w-5 h-5" />
-              Inbox ({totalEmails})
+              Bandeja de Entrada ({totalEmails})
             </h2>
           </div>
 
@@ -398,16 +401,13 @@ export function Simulation() {
                 <div
                   key={email.id}
                   onClick={() => setSelectedEmail(email)}
-                  className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${
-                    selectedEmail?.id === email.id
+                  className={`p-4 border-b border-gray-100 cursor-pointer transition-all ${selectedEmail?.id === email.id
                       ? "border-l-4 pl-3"
                       : "hover:bg-gray-50"
-                  }`}
+                    }`}
                   style={{
-                    backgroundColor:
-                      selectedEmail?.id === email.id ? "#EFF6FF" : undefined,
-                    borderLeftColor:
-                      selectedEmail?.id === email.id ? "#3B82F6" : undefined,
+                    backgroundColor: selectedEmail?.id === email.id ? "#EFF6FF" : undefined,
+                    borderLeftColor: selectedEmail?.id === email.id ? "#3B82F6" : undefined,
                   }}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -424,21 +424,15 @@ export function Simulation() {
                               color: "#1E40AF",
                             }}
                           >
-                            Custom
+                            Personalizado
                           </span>
                         )}
                         {response && (
                           <div className="flex-shrink-0">
                             {response.correct ? (
-                              <CheckCircle
-                                className="w-4 h-4"
-                                style={{ color: "#22C55E" }}
-                              />
+                              <CheckCircle className="w-4 h-4" style={{ color: "#22C55E" }} />
                             ) : (
-                              <XCircle
-                                className="w-4 h-4"
-                                style={{ color: "#EF4444" }}
-                              />
+                              <XCircle className="w-4 h-4" style={{ color: "#EF4444" }} />
                             )}
                           </div>
                         )}
@@ -537,13 +531,10 @@ export function Simulation() {
 
               {/* Action Buttons */}
               {!responses[selectedEmail.id] && (
-                <div
-                  className="p-6 border-t border-gray-200"
-                  style={{ backgroundColor: "#F5F7FA" }}
-                >
+                <div className="p-6 border-t border-gray-200" style={{ backgroundColor: "#F5F7FA" }}>
                   <div className="max-w-3xl">
                     <p className="text-sm font-medium text-gray-700 mb-3">
-                      What would you do with this email?
+                      ¿Qué harías con este email?
                     </p>
                     <div className="flex gap-3">
                       <Button
@@ -552,7 +543,7 @@ export function Simulation() {
                         style={{ backgroundColor: "#3B82F6" }}
                       >
                         <Eye className="w-4 h-4" />
-                        Open
+                        Abrir
                       </Button>
                       <Button
                         onClick={() => handleAction("ignore")}
@@ -560,7 +551,7 @@ export function Simulation() {
                         className="flex items-center gap-2 rounded-lg border-gray-300"
                       >
                         <Archive className="w-4 h-4" />
-                        Ignore
+                        Ignorar
                       </Button>
                       <Button
                         onClick={() => handleAction("report")}
@@ -568,7 +559,7 @@ export function Simulation() {
                         style={{ backgroundColor: "#EF4444" }}
                       >
                         <Flag className="w-4 h-4" />
-                        Report Phishing
+                        Reportar Phishing
                       </Button>
                     </div>
                   </div>
@@ -577,51 +568,35 @@ export function Simulation() {
 
               {/* Feedback Message */}
               {responses[selectedEmail.id] && (
-                <div
-                  className="p-6 border-t border-gray-200"
-                  style={{ backgroundColor: "#F5F7FA" }}
-                >
+                <div className="p-6 border-t border-gray-200" style={{ backgroundColor: "#F5F7FA" }}>
                   <div
                     className="max-w-3xl p-4 rounded-xl flex items-start gap-3"
                     style={{
                       backgroundColor: responses[selectedEmail.id].correct
                         ? "#F0FDF4"
                         : "#FEF2F2",
-                      border: `1px solid ${
-                        responses[selectedEmail.id].correct
-                          ? "#22C55E"
-                          : "#EF4444"
-                      }`,
+                      border: `1px solid ${responses[selectedEmail.id].correct ? "#22C55E" : "#EF4444"
+                        }`,
                     }}
                   >
                     {responses[selectedEmail.id].correct ? (
-                      <CheckCircle
-                        className="w-6 h-6 flex-shrink-0"
-                        style={{ color: "#22C55E" }}
-                      />
+                      <CheckCircle className="w-6 h-6 flex-shrink-0" style={{ color: "#22C55E" }} />
                     ) : (
-                      <XCircle
-                        className="w-6 h-6 flex-shrink-0"
-                        style={{ color: "#EF4444" }}
-                      />
+                      <XCircle className="w-6 h-6 flex-shrink-0" style={{ color: "#EF4444" }} />
                     )}
                     <div>
                       <p
                         className="font-semibold mb-1"
                         style={{
-                          color: responses[selectedEmail.id].correct
-                            ? "#166534"
-                            : "#991B1B",
+                          color: responses[selectedEmail.id].correct ? "#166534" : "#991B1B",
                         }}
                       >
-                        {responses[selectedEmail.id].correct
-                          ? "¡Correcto!"
-                          : "Incorrecto"}
+                        {responses[selectedEmail.id].correct ? "¡Correcto!" : "Incorrecto"}
                       </p>
                       <p className="text-sm text-gray-700">
                         {selectedEmail.isPhishing
-                          ? "Este era un correo de phishing. Señales de alerta: dominio del remitente sospechoso, lenguaje urgente, solicitudes de información sensible."
-                          : "Este era un correo legítimo de una fuente confiable."}
+                          ? "Este era un email de phishing. Señales de alerta: dominio sospechoso del remitente, lenguaje urgente, solicitudes de información sensible."
+                          : "Este era un email legítimo de una fuente confiable."}
                       </p>
                     </div>
                   </div>
@@ -632,7 +607,7 @@ export function Simulation() {
             <div className="flex-1 flex items-center justify-center text-gray-400">
               <div className="text-center">
                 <Mail className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <p className="text-lg">Select an email to view</p>
+                <p className="text-lg">Selecciona un email para ver</p>
               </div>
             </div>
           )}
@@ -650,15 +625,9 @@ export function Simulation() {
         >
           <div className="flex items-start gap-3">
             {currentFeedback.correct ? (
-              <CheckCircle
-                className="w-6 h-6 flex-shrink-0"
-                style={{ color: "#22C55E" }}
-              />
+              <CheckCircle className="w-6 h-6 flex-shrink-0" style={{ color: "#22C55E" }} />
             ) : (
-              <XCircle
-                className="w-6 h-6 flex-shrink-0"
-                style={{ color: "#EF4444" }}
-              />
+              <XCircle className="w-6 h-6 flex-shrink-0" style={{ color: "#EF4444" }} />
             )}
             <p
               className="font-medium"

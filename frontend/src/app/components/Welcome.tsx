@@ -1,25 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import {
-  Shield,
-  Mail,
-  CheckCircle,
-  Plus,
-  ArrowRight,
-  BookOpenIcon,
-} from "lucide-react";
 import { Button } from "./ui/button";
+import { Shield, Mail, CheckCircle, Plus, ArrowRight, BookOpen, Target, Zap, Trophy, BookOpenIcon, } from "lucide-react";
+
+type DifficultyLevel = "facil" | "intermedio" | "dificil";
 
 export function Welcome() {
   const navigate = useNavigate();
   const [emailCount, setEmailCount] = useState<number>(10);
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>("intermedio");
   const [showConfig, setShowConfig] = useState(false);
 
   const handleStartSimulation = () => {
     if (!showConfig) {
       setShowConfig(true);
     } else {
-      navigate("/simulation", { state: { emailCount } });
+      navigate("/simulation", { state: { emailCount, difficulty } });
     }
   };
 
@@ -51,44 +47,120 @@ export function Welcome() {
         {/* Configuration Section */}
         {showConfig && (
           <div className="bg-white rounded-xl p-8 shadow-sm mb-8 animate-in slide-in-from-top">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Configura tu simulación
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              Configura tu Simulación
             </h2>
-            <p className="text-gray-600 mb-6">
-              ¿Cuántos correos electrónicos deseas revisar?
-            </p>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              {[5, 10, 15].map((count) => (
+            {/* Difficulty Selection */}
+            <div className="mb-8">
+              <p className="text-gray-700 font-medium mb-4">
+                Selecciona el nivel de dificultad:
+              </p>
+              <div className="grid grid-cols-3 gap-4">
                 <button
-                  key={count}
-                  onClick={() => setEmailCount(count)}
+                  onClick={() => setDifficulty("facil")}
                   className={`p-6 rounded-xl border-2 transition-all ${
-                    emailCount === count
+                    difficulty === "facil"
+                      ? "border-green-500 bg-green-50"
+                      : "border-gray-300 bg-white hover:border-gray-400"
+                  }`}
+                >
+                  <Target
+                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "facil" ? "text-green-600" : "text-gray-500"}`}
+                  />
+                  <div
+                    className="text-lg font-bold mb-1"
+                    style={{
+                      color: difficulty === "facil" ? "#22C55E" : "#6B7280",
+                    }}
+                  >
+                    Fácil
+                  </div>
+                  <div className="text-xs text-gray-600">Señales obvias</div>
+                </button>
+                <button
+                  onClick={() => setDifficulty("intermedio")}
+                  className={`p-6 rounded-xl border-2 transition-all ${
+                    difficulty === "intermedio"
                       ? "border-blue-500 bg-blue-50"
                       : "border-gray-300 bg-white hover:border-gray-400"
                   }`}
                 >
+                  <Zap
+                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "intermedio" ? "text-blue-600" : "text-gray-500"}`}
+                  />
                   <div
-                    className="text-3xl font-bold mb-2"
+                    className="text-lg font-bold mb-1"
                     style={{
-                      color: emailCount === count ? "#3B82F6" : "#6B7280",
+                      color:
+                        difficulty === "intermedio" ? "#3B82F6" : "#6B7280",
                     }}
                   >
-                    {count}
+                    Intermedio
                   </div>
-                  <div className="text-sm text-gray-600">
-                    {count === 5
-                      ? "Rápido"
-                      : count === 10
-                        ? "Estándar"
-                        : "Largo"}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    ~{count === 5 ? "3" : count === 10 ? "5" : "8"} min
-                  </div>
+                  <div className="text-xs text-gray-600">Señales moderadas</div>
                 </button>
-              ))}
+                <button
+                  onClick={() => setDifficulty("dificil")}
+                  className={`p-6 rounded-xl border-2 transition-all ${
+                    difficulty === "dificil"
+                      ? "border-red-500 bg-red-50"
+                      : "border-gray-300 bg-white hover:border-gray-400"
+                  }`}
+                >
+                  <Trophy
+                    className={`w-8 h-8 mx-auto mb-2 ${difficulty === "dificil" ? "text-red-600" : "text-gray-500"}`}
+                  />
+                  <div
+                    className="text-lg font-bold mb-1"
+                    style={{
+                      color: difficulty === "dificil" ? "#EF4444" : "#6B7280",
+                    }}
+                  >
+                    Difícil
+                  </div>
+                  <div className="text-xs text-gray-600">Señales sutiles</div>
+                </button>
+              </div>
+            </div>
+
+            {/* Email Count Selection */}
+            <div>
+              <p className="text-gray-700 font-medium mb-4">
+                ¿Cuántos emails deseas revisar?
+              </p>
+              <div className="grid grid-cols-3 gap-4">
+                {[5, 10, 15].map((count) => (
+                  <button
+                    key={count}
+                    onClick={() => setEmailCount(count)}
+                    className={`p-6 rounded-xl border-2 transition-all ${
+                      emailCount === count
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-300 bg-white hover:border-gray-400"
+                    }`}
+                  >
+                    <div
+                      className="text-3xl font-bold mb-2"
+                      style={{
+                        color: emailCount === count ? "#3B82F6" : "#6B7280",
+                      }}
+                    >
+                      {count}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                      {count === 5
+                        ? "Rápido"
+                        : count === 10
+                          ? "Estándar"
+                          : "Completo"}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      ~{count === 5 ? "3" : count === 10 ? "5" : "8"} min
+                    </div>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}

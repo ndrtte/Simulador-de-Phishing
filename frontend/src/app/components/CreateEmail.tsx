@@ -18,35 +18,36 @@ export function CreateEmail() {
 
     // Create new email object
     const newEmail = {
-      id: Date.now(), 
+      id: Date.now(), // Simple ID based on timestamp
       from: formData.from,
       fromEmail: formData.fromEmail,
       subject: formData.subject,
       preview: formData.body.substring(0, 60) + "...",
-      time: "Just now",
+      time: "Justo ahora",
       isPhishing: formData.isPhishing,
       body: formData.body,
       isCustom: true,
+      difficulty: "intermedio" as const, // Custom emails default to intermedio
     };
 
     // Get existing custom emails from localStorage
     const existingEmails = JSON.parse(
-      localStorage.getItem("customEmails") || "[]",
+      localStorage.getItem("customEmails") || "[]"
     );
 
     // Add new email
     localStorage.setItem(
       "customEmails",
-      JSON.stringify([...existingEmails, newEmail]),
+      JSON.stringify([...existingEmails, newEmail])
     );
 
     // Show success and redirect
-    alert("¡Correo electrónico añadido correctamente! Aparecerá en tu próxima simulación.");
+    alert("¡Email agregado exitosamente! Aparecerá en tu próxima simulación.");
     navigate("/");
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setFormData({
       ...formData,
@@ -64,7 +65,7 @@ export function CreateEmail() {
           className="mb-6 rounded-lg border-gray-300"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Volver a Inicio
+          Volver al Inicio
         </Button>
 
         <div className="bg-white rounded-xl p-8 shadow-sm mb-6">
@@ -76,9 +77,11 @@ export function CreateEmail() {
               <Mail className="w-6 h-6" style={{ color: "#3B82F6" }} />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Crear Email</h1>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Crear Email
+              </h1>
               <p className="text-gray-600">
-                Diseña un correo electrónico personalizado para la simulación.
+                Diseña un email personalizado para la simulación
               </p>
             </div>
           </div>
@@ -93,7 +96,7 @@ export function CreateEmail() {
                 htmlFor="from"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Nombre del remitente
+                Nombre del Remitente
               </label>
               <input
                 type="text"
@@ -102,7 +105,7 @@ export function CreateEmail() {
                 required
                 value={formData.from}
                 onChange={handleChange}
-                placeholder="ej., IT Support Team"
+                placeholder="ej., Equipo de Soporte TI"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -113,7 +116,7 @@ export function CreateEmail() {
                 htmlFor="fromEmail"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Correo electrónico del remitente
+                Email del Remitente
               </label>
               <input
                 type="email"
@@ -122,7 +125,7 @@ export function CreateEmail() {
                 required
                 value={formData.fromEmail}
                 onChange={handleChange}
-                placeholder="ej., support@company.com"
+                placeholder="ej., soporte@empresa.com"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -142,7 +145,7 @@ export function CreateEmail() {
                 required
                 value={formData.subject}
                 onChange={handleChange}
-                placeholder="ej., Actualización de seguridad importante"
+                placeholder="ej., Actualización de Seguridad Importante"
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -161,7 +164,7 @@ export function CreateEmail() {
                 required
                 value={formData.body}
                 onChange={handleChange}
-                placeholder="Escribe aquí el mensaje de correo electrónico...."
+                placeholder="Escribe el mensaje del email aquí..."
                 rows={10}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y"
               />
@@ -201,19 +204,19 @@ export function CreateEmail() {
                     </div>
                     <span
                       className={`font-medium ${
-                        !formData.isPhishing
-                          ? "text-green-700"
-                          : "text-gray-700"
+                        !formData.isPhishing ? "text-green-700" : "text-gray-700"
                       }`}
                     >
-                      Legitimo
+                      Legítimo
                     </span>
                   </div>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, isPhishing: true })}
+                  onClick={() =>
+                    setFormData({ ...formData, isPhishing: true })
+                  }
                   className={`flex-1 px-6 py-4 rounded-lg border-2 transition-all ${
                     formData.isPhishing
                       ? "border-red-500 bg-red-50"
@@ -270,10 +273,9 @@ export function CreateEmail() {
           }}
         >
           <p className="text-sm" style={{ color: "#1E40AF" }}>
-            <strong>Tip:</strong> Para los correos electrónicos de phishing,
-            incluya señales de alerta comunes: como dominios de remitente
-            sospechosos, lenguaje urgente, solicitudes de información
-            confidencial o enlaces inusuales.
+            <strong>Consejo:</strong> Para emails de phishing, incluye señales de alerta comunes
+            como dominios sospechosos del remitente, lenguaje urgente, solicitudes de
+            información sensible, o enlaces inusuales.
           </p>
         </div>
       </div>

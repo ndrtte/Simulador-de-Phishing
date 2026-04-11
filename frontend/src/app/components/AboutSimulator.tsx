@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { ArrowLeft, BookOpen, Play, Mail, CheckCircle, PieChart, Settings, Shield, AlertTriangle, Eye, Flag, Archive } from "lucide-react";
+import { ArrowLeft, BookOpen, Play, Mail, CheckCircle, PieChart, Settings, Shield, AlertTriangle, Eye, Flag, Archive, Target } from "lucide-react";
 import { Button } from "./ui/button";
 
 export function AboutSimulator() {
@@ -78,6 +78,51 @@ export function AboutSimulator() {
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                     <Settings className="w-5 h-5" style={{ color: "#3B82F6" }} />
+                    Selecciona el nivel de dificultad
+                  </h3>
+
+                  <p className="text-gray-700 mb-3">
+                    Elige el nivel de dificultad para la simulación:
+                  </p>
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="p-6 rounded-xl border-2 border-green-500 bg-green-50 text-center">
+                      <Target className="w-8 h-8 mx-auto mb-2 text-green-600" />
+                      <div className="text-lg font-bold mb-1 text-green-600">
+                        Fácil
+                      </div>
+                      <div className="text-xs text-gray-600">
+                        Señales obvias
+                      </div>
+                    </div>
+                    <div className="p-6 rounded-xl border-2 border-gray-300 bg-white text-center">
+                      <Target className="w-8 h-8 mx-auto mb-2 text-gray-500" />
+                      <div className="text-lg font-bold mb-1 text-gray-600">
+                        Intermedio
+                      </div>
+                      <div className="text-xs text-gray-600">
+                        Señales moderadas
+                      </div>
+                    </div>
+                    <div className="p-6 rounded-xl border-2 border-gray-300 bg-white text-center">
+                      <Target className="w-8 h-8 mx-auto mb-2 text-gray-500" />
+
+                      <div className="text-lg font-bold mb-1 text-gray-600">
+                        Difícil
+                      </div>
+
+                      <div className="text-xs text-gray-600">
+                        Señales sutiles
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                    <Settings className="w-5 h-5" style={{ color: "#3B82F6" }} />
                     Seleccionar Cantidad de Emails
                   </h3>
                   <p className="text-gray-700 mb-3">
@@ -105,7 +150,7 @@ export function AboutSimulator() {
                     Iniciar
                   </h3>
                   <p className="text-gray-700">
-                    Después de seleccionar la cantidad de emails, haz clic en "Iniciar Simulación"
+                    Después de seleccionar la cantidad de emails, haz clic en "Comenzar Simulación"
                     para empezar el entrenamiento.
                   </p>
                 </div>
@@ -565,4 +610,3 @@ export function AboutSimulator() {
     </div>
   );
 }
-

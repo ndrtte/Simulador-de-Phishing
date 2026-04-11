@@ -17,7 +17,7 @@ import {
 export function Results() {
   const location = useLocation();
   const navigate = useNavigate();
-
+  
   const {
     detectionRate = 0,
     errorRate = 0,
@@ -27,22 +27,22 @@ export function Results() {
 
   // Pie chart data
   const pieData = [
-    { name: "Correcto", value: correctCount, color: "#22C55E" },
-    { name: "Incorrecto", value: totalCount - correctCount, color: "#EF4444" },
+    { name: "Correctas", value: correctCount, color: "#22C55E" },
+    { name: "Incorrectas", value: totalCount - correctCount, color: "#EF4444" },
   ];
 
   // Bar chart data
   const barData = [
-    { name: "Tasa de detección", value: detectionRate, color: "#22C55E" },
-    { name: "Tasa de errores", value: errorRate, color: "#EF4444" },
+    { name: "Tasa de Detección", value: detectionRate, color: "#22C55E" },
+    { name: "Tasa de Error", value: errorRate, color: "#EF4444" },
   ];
 
   const getPerformanceMessage = () => {
     if (detectionRate >= 90) {
       return {
-        title: "¡Rendimiento excelente!",
-        message: "Tienes una sólida comprensión de los indicadores de phishing. ¡Sigue así!",
-        riskLevel: "Riesgo bajo",
+        title: "¡Rendimiento Excelente!",
+        message: "Tienes una comprensión sólida de los indicadores de phishing. ¡Sigue con el gran trabajo!",
+        riskLevel: "Riesgo Bajo",
         riskColor: "#22C55E",
         riskBgColor: "#F0FDF4",
         icon: Award,
@@ -50,9 +50,9 @@ export function Results() {
       };
     } else if (detectionRate >= 70) {
       return {
-        title: "Buen nivel de detección",
-        message: "Lo estás haciendo bien, pero hay espacio para mejorar. Revisa los correos que fallaste para aprender más.",
-        riskLevel: "Riesgo medio",
+        title: "Buen Nivel de Detección",
+        message: "Lo estás haciendo bien, pero hay espacio para mejorar. Revisa los emails que no identificaste para aprender más.",
+        riskLevel: "Riesgo Medio",
         riskColor: "#F59E0B",
         riskBgColor: "#FFFBEB",
         icon: TrendingUp,
@@ -60,9 +60,9 @@ export function Results() {
       };
     } else if (detectionRate >= 50) {
       return {
-        title: "Necesita mejorar",
-        message: "Fallaste en identificar varios intentos de phishing. Revisa las señales comunes y vuelve a intentar la simulación.",
-        riskLevel: "Alto riesgo",
+        title: "Necesita Mejora",
+        message: "No identificaste varios intentos de phishing. Revisa las señales de alerta comunes e intenta la simulación de nuevo.",
+        riskLevel: "Riesgo Alto",
         riskColor: "#EF4444",
         riskBgColor: "#FEF2F2",
         icon: AlertTriangle,
@@ -70,9 +70,9 @@ export function Results() {
       };
     } else {
       return {
-        title: "Crítico - Se necesita más entrenamiento",
-        message: "Eres vulnerable a ataques de phishing. Por favor revisa las buenas prácticas de seguridad y practica regularmente.",
-        riskLevel: "Riesgo crítico",
+        title: "Crítico - Más Entrenamiento Necesario",
+        message: "Eres vulnerable a ataques de phishing. Por favor revisa las mejores prácticas de seguridad y practica regularmente.",
+        riskLevel: "Riesgo Crítico",
         riskColor: "#DC2626",
         riskBgColor: "#FEF2F2",
         icon: AlertTriangle,
@@ -94,9 +94,9 @@ export function Results() {
           className="mb-4 rounded-lg border-gray-300"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Volver a Inicio
+          Volver al Inicio
         </Button>
-
+        
         <div className="bg-white rounded-xl p-8 shadow-sm">
           <div className="flex items-start gap-4">
             <div
@@ -121,22 +121,22 @@ export function Results() {
       <div className="max-w-5xl mx-auto mb-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-2">Tasa de detección</p>
+            <p className="text-sm text-gray-600 mb-2">Tasa de Detección</p>
             <p className="text-4xl font-bold mb-1" style={{ color: "#22C55E" }}>
               {detectionRate}%
             </p>
             <p className="text-sm text-gray-500">
-              Phishing identificado correctamente 
+              Phishing correctamente identificado
             </p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-sm">
-            <p className="text-sm text-gray-600 mb-2">Tasa de error</p>
+            <p className="text-sm text-gray-600 mb-2">Tasa de Error</p>
             <p className="text-4xl font-bold mb-1" style={{ color: "#EF4444" }}>
               {errorRate}%
             </p>
             <p className="text-sm text-gray-500">
-              Resultados no detectados o falsos positivos
+              No identificados o falsos positivos
             </p>
           </div>
 
@@ -146,7 +146,7 @@ export function Results() {
               {totalCount}
             </p>
             <p className="text-sm text-gray-500">
-              Revisado y evaluado
+              Revisados y evaluados
             </p>
           </div>
 
@@ -158,7 +158,7 @@ export function Results() {
             }}
           >
             <p className="text-sm mb-2" style={{ color: performance.riskColor }}>
-              Su nivel de riesgo
+              Tu Nivel de Riesgo
             </p>
             <p className="text-3xl font-bold mb-1" style={{ color: performance.riskColor }}>
               {performance.riskLevel.split(' ')[0]}
@@ -176,7 +176,7 @@ export function Results() {
           {/* Performance Breakdown - Pie Chart */}
           <div className="bg-white rounded-xl p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Desglose del rendimiento
+              Desglose de Rendimiento
             </h2>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -205,7 +205,7 @@ export function Results() {
                   className="w-4 h-4 rounded"
                   style={{ backgroundColor: "#22C55E" }}
                 />
-                <span className="text-sm text-gray-700">Correcto ({correctCount})</span>
+                <span className="text-sm text-gray-700">Correctas ({correctCount})</span>
               </div>
               <div className="flex items-center gap-2">
                 <div
@@ -213,7 +213,7 @@ export function Results() {
                   style={{ backgroundColor: "#EF4444" }}
                 />
                 <span className="text-sm text-gray-700">
-                  Incorrecto ({totalCount - correctCount})
+                  Incorrectas ({totalCount - correctCount})
                 </span>
               </div>
             </div>
@@ -222,7 +222,7 @@ export function Results() {
           {/* Detection vs Error Rate - Bar Chart */}
           <div className="bg-white rounded-xl p-6 shadow-sm">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Tasa de detección vs Tasa de error
+              Tasa de Detección vs Error
             </h2>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={barData}>
@@ -251,32 +251,34 @@ export function Results() {
       <div className="max-w-5xl mx-auto">
         <div className="bg-white rounded-xl p-8 shadow-sm">
           <h2 className="text-xl font-semibold text-gray-900 mb-6">
-            Indicadores clave de phishing que debes recordar
+            Indicadores Clave de Phishing para Recordar
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-3">
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Direcciones de remitente sospechosas</p>
+                  <p className="font-medium text-gray-900">Direcciones de Remitente Sospechosas</p>
                   <p className="text-sm text-gray-600">
-                    Busque errores ortográficos, dominios inusuales o direcciones de correo electrónico que no coincidan con el nombre del remitente.                  </p>
+                    Busca errores ortográficos, dominios inusuales o direcciones de email que no coincidan con el nombre del remitente
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Lenguaje urgente o amenazante</p>
+                  <p className="font-medium text-gray-900">Lenguaje Urgente o Amenazante</p>
                   <p className="text-sm text-gray-600">
-                    Los correos electrónicos de phishing suelen crear una sensación de urgencia para presionarte a actuar rápidamente.                  </p>
+                    Los emails de phishing a menudo crean un sentido de urgencia para presionarte a actuar rápidamente
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Solicitudes de información confidencial</p>
+                  <p className="font-medium text-gray-900">Solicitudes de Información Sensible</p>
                   <p className="text-sm text-gray-600">
-                    Legitimate organizations never ask for passwords, SSN, or financial details via email
+                    Las organizaciones legítimas nunca piden contraseñas, RFC o detalles financieros por email
                   </p>
                 </div>
               </div>
@@ -285,25 +287,28 @@ export function Results() {
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Enlaces sospechosos</p>
+                  <p className="font-medium text-gray-900">Enlaces Sospechosos</p>
                   <p className="text-sm text-gray-600">
-                    Pasa el cursor sobre los enlaces para comprobar la URL real antes de hacer clic. Ten cuidado con los enlaces acortados.                  </p>
+                    Pasa el cursor sobre los enlaces para verificar la URL real antes de hacer clic. Ten cuidado con enlaces acortados
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Saludos genéricos</p>
+                  <p className="font-medium text-gray-900">Saludos Genéricos</p>
                   <p className="text-sm text-gray-600">
-                    El uso de "Estimado cliente" o "Estimado usuario" en lugar de su nombre real suele ser una señal de alerta.                  </p>
+                    "Estimado Cliente" o "Estimado Usuario" en lugar de tu nombre real es a menudo una señal de alerta
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="w-2 h-2 rounded-full mt-2 flex-shrink-0" style={{ backgroundColor: "#EF4444" }} />
                 <div>
-                  <p className="font-medium text-gray-900">Mala gramática y ortografía</p>
+                  <p className="font-medium text-gray-900">Gramática y Ortografía Deficientes</p>
                   <p className="text-sm text-gray-600">
-                    Las organizaciones profesionales revisan cuidadosamente sus comunicaciones.                  </p>
+                    Las organizaciones profesionales revisan cuidadosamente sus comunicaciones
+                  </p>
                 </div>
               </div>
             </div>
@@ -318,14 +323,14 @@ export function Results() {
           className="px-8 py-6 h-auto text-lg rounded-xl"
           style={{ backgroundColor: "#3B82F6" }}
         >
-          Intenta otra vez
+          Intentar de Nuevo
         </Button>
         <Button
           onClick={() => navigate("/")}
           variant="outline"
           className="px-8 py-6 h-auto text-lg rounded-xl border-gray-300"
         >
-          Volver a Inicio
+          Volver al Inicio
         </Button>
       </div>
     </div>
