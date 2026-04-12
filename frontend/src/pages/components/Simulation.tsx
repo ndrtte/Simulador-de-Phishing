@@ -6,10 +6,7 @@ import {
   Archive,
   Eye,
   CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Building2,
-  Tag,
+  XCircle
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Correo } from "../../types/correo";
@@ -26,19 +23,6 @@ export function Simulation() {
     cantidad: number;
   };
 
-  const [correos, setCorreos] = useState<Correo[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const [allEmails, setAllEmails] = useState<Correo[]>(() => {
-    const customEmails = JSON.parse(
-      localStorage.getItem("customEmails") || "[]",
-    );
-
-    return [...customEmails];
-  });
-
-  // Select only the specified number of emails
-  const [emails, setEmails] = useState<EmailUI[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<Correo | null>(null);
   const [responses, setResponses] = useState<{
     [key: number]: { action: string; correct: boolean };
@@ -48,23 +32,38 @@ export function Simulation() {
     message: string;
   } | null>(null);
 
+  const [emails, setEmails] = useState<EmailUI[]>([]);
+
 
   useEffect(() => {
     const loadEmails = async () => {
       const systemEmails = await obtenerCorreos(dificultad, cantidad);
 
       const customEmails = JSON.parse(
-        localStorage.getItem("customEmails") || "[]"
+        localStorage.getItem("customEmails") || "[]",
       );
 
       const safeCustomEmails = customEmails.map((e: any) => ({
-        idCorreo: e.idCorreo ?? crypto.randomUUID(),
+        idCorreo: e.idCorreo ?? Date.now(),
         nombreRemitente: e.nombreRemitente ?? "Desconocido",
+        correoRemitente: e.correoRemitente ?? "",
         asunto: e.asunto ?? "",
         cuerpoCorreo: e.cuerpoCorreo ?? "",
+        esPhishing: e.esPhishing ?? 0,
+        dificultad: e.dificultad ?? {
+          idDificultad: 2,
+          dificultad: "intermedio",
+        },
+        isCustom: true,
       }));
 
-      setEmails([...systemEmails, ...safeCustomEmails]);
+      const merged = [...systemEmails];
+
+      for (let i = 0; i < safeCustomEmails.length; i++) {
+        merged[i] = safeCustomEmails[i];
+      }
+
+      setEmails(merged);
     };
 
     loadEmails();

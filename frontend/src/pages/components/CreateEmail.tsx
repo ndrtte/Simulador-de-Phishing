@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { ArrowLeft, Mail, Plus } from "lucide-react";
 import { Button } from "./ui/button";
+import { EmailUI } from "../../types/EmailUI";
 
 export function CreateEmail() {
   const navigate = useNavigate();
@@ -10,38 +11,33 @@ export function CreateEmail() {
     fromEmail: "",
     subject: "",
     body: "",
-    isPhishing: false,
+    isPhishing: 0,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Create new email object
-    const newEmail = {
-      id: Date.now(), // Simple ID based on timestamp
-      from: formData.from,
-      fromEmail: formData.fromEmail,
-      subject: formData.subject,
-      preview: formData.body.substring(0, 60) + "...",
-      time: "Justo ahora",
-      isPhishing: formData.isPhishing,
-      body: formData.body,
+    const newEmail: EmailUI = {
+      idCorreo: Date.now(),
+      nombreRemitente: formData.from,
+      correoRemitente: formData.fromEmail,
+      asunto: formData.subject,
+      cuerpoCorreo: formData.body,
+      esPhishing: formData.isPhishing ? 1 : 0,
+      dificultad: {
+        idDificultad: 2,
+        dificultad: "intermedio",
+      },
       isCustom: true,
-      difficulty: "intermedio" as const, // Custom emails default to intermedio
     };
 
-    // Get existing custom emails from localStorage
-    const existingEmails = JSON.parse(
-      localStorage.getItem("customEmails") || "[]"
-    );
+    const existing = JSON.parse(localStorage.getItem("customEmails") || "[]");
 
-    // Add new email
     localStorage.setItem(
       "customEmails",
-      JSON.stringify([...existingEmails, newEmail])
+      JSON.stringify([...existing, newEmail])
     );
 
-    // Show success and redirect
     alert("¡Email agregado exitosamente! Aparecerá en tu próxima simulación.");
     navigate("/");
   };
@@ -179,21 +175,19 @@ export function CreateEmail() {
                 <button
                   type="button"
                   onClick={() =>
-                    setFormData({ ...formData, isPhishing: false })
+                    setFormData({ ...formData, isPhishing: 0 })
                   }
-                  className={`flex-1 px-6 py-4 rounded-lg border-2 transition-all ${
-                    !formData.isPhishing
-                      ? "border-green-500 bg-green-50"
-                      : "border-gray-300 bg-white hover:border-gray-400"
-                  }`}
+                  className={`flex-1 px-6 py-4 rounded-lg border-2 transition-all ${!formData.isPhishing
+                    ? "border-green-500 bg-green-50"
+                    : "border-gray-300 bg-white hover:border-gray-400"
+                    }`}
                 >
                   <div className="flex items-center justify-center gap-2">
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        !formData.isPhishing
-                          ? "border-green-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${!formData.isPhishing
+                        ? "border-green-500"
+                        : "border-gray-300"
+                        }`}
                     >
                       {!formData.isPhishing && (
                         <div
@@ -203,9 +197,8 @@ export function CreateEmail() {
                       )}
                     </div>
                     <span
-                      className={`font-medium ${
-                        !formData.isPhishing ? "text-green-700" : "text-gray-700"
-                      }`}
+                      className={`font-medium ${!formData.isPhishing ? "text-green-700" : "text-gray-700"
+                        }`}
                     >
                       Legítimo
                     </span>
@@ -215,21 +208,19 @@ export function CreateEmail() {
                 <button
                   type="button"
                   onClick={() =>
-                    setFormData({ ...formData, isPhishing: true })
+                    setFormData({ ...formData, isPhishing: 1 })
                   }
-                  className={`flex-1 px-6 py-4 rounded-lg border-2 transition-all ${
-                    formData.isPhishing
-                      ? "border-red-500 bg-red-50"
-                      : "border-gray-300 bg-white hover:border-gray-400"
-                  }`}
+                  className={`flex-1 px-6 py-4 rounded-lg border-2 transition-all ${formData.isPhishing
+                    ? "border-red-500 bg-red-50"
+                    : "border-gray-300 bg-white hover:border-gray-400"
+                    }`}
                 >
                   <div className="flex items-center justify-center gap-2">
                     <div
-                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                        formData.isPhishing
-                          ? "border-red-500"
-                          : "border-gray-300"
-                      }`}
+                      className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.isPhishing
+                        ? "border-red-500"
+                        : "border-gray-300"
+                        }`}
                     >
                       {formData.isPhishing && (
                         <div
@@ -239,9 +230,8 @@ export function CreateEmail() {
                       )}
                     </div>
                     <span
-                      className={`font-medium ${
-                        formData.isPhishing ? "text-red-700" : "text-gray-700"
-                      }`}
+                      className={`font-medium ${formData.isPhishing ? "text-red-700" : "text-gray-700"
+                        }`}
                     >
                       Phishing
                     </span>
