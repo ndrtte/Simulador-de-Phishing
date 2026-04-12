@@ -18,10 +18,8 @@ export function Simulation() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { dificultad, cantidad } = location.state as {
-    dificultad: number;
-    cantidad: number;
-  };
+  const dificultad = location.state?.dificultad ?? 1;
+  const cantidad = location.state?.cantidad ?? 10;
 
   const [selectedEmail, setSelectedEmail] = useState<Correo | null>(null);
   const [responses, setResponses] = useState<{

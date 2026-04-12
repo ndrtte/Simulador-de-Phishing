@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import { ArrowLeft, BookOpen, Play, Mail, CheckCircle, PieChart, Settings, Shield, AlertTriangle, Eye, Flag, Archive, Target } from "lucide-react";
 import { Button } from "./ui/button";
 
+
 export function AboutSimulator() {
   const navigate = useNavigate();
 
