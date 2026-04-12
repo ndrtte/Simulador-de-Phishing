@@ -591,14 +591,6 @@ export function AboutSimulator() {
         {/* Action Buttons */}
         <div className="flex gap-4 justify-center">
           <Button
-            onClick={() => navigate("/simulation")}
-            className="px-8 py-6 h-auto text-lg rounded-xl flex items-center gap-2"
-            style={{ backgroundColor: "#3B82F6" }}
-          >
-            <Play className="w-5 h-5" />
-            Comenzar Simulación
-          </Button>
-          <Button
             onClick={() => navigate("/")}
             variant="outline"
             className="px-8 py-6 h-auto text-lg rounded-xl border-gray-300"
